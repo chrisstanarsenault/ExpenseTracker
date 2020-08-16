@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import Search from "./Search";
 
 const ActionPanel = ({ query, setQuery, selectedItems, clearSelections }) => {
+  const margin = { marginRight: "2px" };
+
   const [searchButton, showSearchButton] = useState(false);
   return (
     <>
       {selectedItems.length ? (
         <div className="options-panel">
           <div>
-            <button className="actionable-button" onClick={clearSelections}>
+            <button
+              className="actionable-button"
+              onClick={clearSelections}
+              style={margin}
+            >
               <i className="fas fa-times"></i>
             </button>
             <h3 className="bold-title">{`${selectedItems.length} selected`}</h3>
