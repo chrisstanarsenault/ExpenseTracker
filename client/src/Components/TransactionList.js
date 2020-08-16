@@ -5,7 +5,7 @@ import ActionPanel from "./ActionPanel";
 import { GlobalContext } from "../context/GlobalState";
 
 const TransactionList = () => {
-  const { transactions, getTransactions } = useContext(GlobalContext);
+  const { transactions, getTransactions, loading } = useContext(GlobalContext);
   const [selectedItems, setSelectedItems] = useState([]);
   const [query, setQuery] = useState("");
 

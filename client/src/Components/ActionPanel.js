@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { GlobalContext } from "../context/GlobalState";
 import Search from "./Search";
 
 const ActionPanel = ({ query, setQuery, selectedItems, clearSelections }) => {
+  const { deleteTransaction } = useContext(GlobalContext);
+  const [searchButton, showSearchButton] = useState(false);
+
+  // Delete selected list items
+  const deleteSelectedItems = (selections) => {
+    selections.forEach((id) => deleteTransaction(id));
+    clearSelections();
+  };
+
+  // Style
   const margin = { marginRight: "2px" };
 
-  const [searchButton, showSearchButton] = useState(false);
   return (
     <>
       {selectedItems.length ? (
@@ -26,7 +36,10 @@ const ActionPanel = ({ query, setQuery, selectedItems, clearSelections }) => {
                 <i className="fas fa-pen"></i>
               </button>
             )}
-            <button className="actionable-button delete-btn">
+            <button
+              className="actionable-button delete-btn"
+              onClick={() => deleteSelectedItems(selectedItems)}
+            >
               <i className="fas fa-trash"></i>
             </button>
           </div>
@@ -34,10 +47,10 @@ const ActionPanel = ({ query, setQuery, selectedItems, clearSelections }) => {
       ) : (
         <div className="search-panel">
           <h3 className="bold-title">{query ? query + "..." : "History"}</h3>
-          <Search search={searchButton} query={query} setQuery={setQuery} />
+          {searchButton ? <Search query={query} setQuery={setQuery} /> : null}
           <button
             className="actionable-button"
-            onClick={() => showSearchButton(!searchButton)}
+            onClick={() => showSearchButton((searchButton) => !searchButton)}
           >
             {searchButton ? (
               <i className="fas fa-times"></i>
